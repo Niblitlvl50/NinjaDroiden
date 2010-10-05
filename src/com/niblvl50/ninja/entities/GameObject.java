@@ -63,6 +63,11 @@ public class GameObject extends AnimatedSprite
 		controller.registerGameObject(this);
 	}
 	
+	public void canJump(boolean jump)
+	{
+		this.canJump = jump;
+	}
+	
 	public boolean canJump()
 	{
 		return this.canJump;

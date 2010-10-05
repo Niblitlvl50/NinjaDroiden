@@ -14,16 +14,16 @@ import com.niblvl50.ninja.eventbus.EventHandler;
 
 public class NinjaActivity extends BaseGameActivity
 {
-	private static final int CAMERA_WIDTH = 400;
-	private static final int CAMERA_HEIGHT = 240;
+	public static final int WORLD_WIDTH = 400;
+	public static final int WORLD_HEIGHT = 240;
 	
 	@Override
 	public Engine onLoadEngine()
 	{
 		EventBus.register(this);
 		
-		Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-		EngineOptions options = new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+		Camera camera = new Camera(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+		EngineOptions options = new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(WORLD_WIDTH, WORLD_HEIGHT), camera);
 		return new Engine(options);
 	}
 

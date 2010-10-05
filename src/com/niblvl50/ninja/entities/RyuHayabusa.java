@@ -1,5 +1,6 @@
 package com.niblvl50.ninja.entities;
 
+import com.niblvl50.ninja.NinjaActivity;
 import com.niblvl50.ninja.Textures;
 
 public class RyuHayabusa extends GameObject
@@ -14,7 +15,7 @@ public class RyuHayabusa extends GameObject
 		super(0, 0, 32, 32, Textures.ryu);
 		
 		this.loadAnimationSequences();
-		this.setAnimationSequence(STOP);
+		this.setAnimationSequence(RUNNING);
 	}
 
 	private void loadAnimationSequences()
@@ -27,6 +28,17 @@ public class RyuHayabusa extends GameObject
 		this.addAnimationSequence(RUNNING, new AnimationSequence(1, 3, runningDuration, true));
 		this.addAnimationSequence(JUMPING, new AnimationSequence(4, 7, jumpingDuration, true));
 		this.addAnimationSequence(KILLING, new AnimationSequence(8, 11, killingDuration, false));
+	}
+	
+	@Override
+	public void onPositionChanged()
+	{
+		super.onPositionChanged();
+		
+		if(this.mX + this.getWidth() < 0)
+			this.mX = NinjaActivity.WORLD_WIDTH;
+		else if(this.mX > NinjaActivity.WORLD_WIDTH)
+			this.mX = 0 - this.getWidth();
 	}
 
 }

@@ -23,7 +23,7 @@ public class NinjaScene extends Scene
 		
 		ninja = new RyuHayabusa();
 		ninja.attachController(new NinjaController());
-		ninja.setPosition(100, 200);
+		ninja.setPosition(100, 170);
 		this.getTopLayer().addEntity(ninja);
 		
 		mBackground = new ParallaxBackground(1.0f, 1.0f, 1.0f);
