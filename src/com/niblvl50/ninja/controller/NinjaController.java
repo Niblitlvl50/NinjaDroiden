@@ -1,12 +1,13 @@
 package com.niblvl50.ninja.controller;
 
+import org.anddev.andengine.entity.shape.modifier.MoveYModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 
-import android.util.Log;
-
 import com.niblvl50.ninja.entities.GameObject;
+import com.niblvl50.ninja.entities.RyuHayabusa;
 import com.niblvl50.ninja.eventbus.EventBus;
 import com.niblvl50.ninja.eventbus.EventHandler;
 
@@ -14,8 +15,7 @@ import com.niblvl50.ninja.eventbus.EventHandler;
 public class NinjaController implements IController, IAccelerometerListener
 {
 	private GameObject object = null;
-	private int animation = 0;
-	private boolean spriteFlipped = false;
+	private int animation = RyuHayabusa.STOP;
 	
 	@Override
 	public void registerGameObject(GameObject object)
@@ -31,20 +31,23 @@ public class NinjaController implements IController, IAccelerometerListener
 		if(event.getAction() == TouchEvent.ACTION_UP)
 		{
 			object.setAnimationSequence(animation);
-			
-			spriteFlipped = !spriteFlipped;
-			object.flipSprite(spriteFlipped);
 
 			++animation;
 			if(animation > 3)
 				animation = 0;
+		}
+		
+		if(event.getAction() == TouchEvent.ACTION_DOWN)
+		{
+			if(object.canJump())
+				object.addShapeModifier(new SequenceShapeModifier(new MoveYModifier(1.0f, object.getY(), object.getY() - 50.0f), new MoveYModifier(1.0f, object.getY() - 50.0f, object.getY())));
 		}
 	}
 
 	@Override
 	public void onAccelerometerChanged(AccelerometerData data)
 	{
-		Log.d("Accelerometer", String.valueOf(data.getX()));
+		object.setVelocityX(data.getY() * 10);
 	}
 
 }

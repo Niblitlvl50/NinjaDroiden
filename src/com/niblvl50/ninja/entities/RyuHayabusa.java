@@ -19,15 +19,14 @@ public class RyuHayabusa extends GameObject
 
 	private void loadAnimationSequences()
 	{
-		final long[] stopDuration = { 100 };
 		final long[] runningDuration = { 100, 100, 100 };
 		final long[] jumpingDuration = { 100, 100, 100, 100 };
 		final long[] killingDuration = { 100, 100, 100, 100 };
 		
-		this.addAnimationSequence(STOP, new AnimationSequence(0, 0, stopDuration));
-		this.addAnimationSequence(RUNNING, new AnimationSequence(1, 3, runningDuration));
-		this.addAnimationSequence(JUMPING, new AnimationSequence(4, 7, jumpingDuration));
-		this.addAnimationSequence(KILLING, new AnimationSequence(8, 11, killingDuration));
+		this.addAnimationSequence(STOP, new StopSequence(0));
+		this.addAnimationSequence(RUNNING, new AnimationSequence(1, 3, runningDuration, true));
+		this.addAnimationSequence(JUMPING, new AnimationSequence(4, 7, jumpingDuration, true));
+		this.addAnimationSequence(KILLING, new AnimationSequence(8, 11, killingDuration, false));
 	}
 
 }

@@ -11,7 +11,10 @@ import com.niblvl50.ninja.controller.IController;
 
 public class GameObject extends AnimatedSprite
 {
-	private Map<Integer, AnimationSequence> mSequences = new HashMap<Integer, AnimationSequence>();
+	private float lastXPos = 0;
+	private boolean canJump = true;
+	
+	private Map<Integer, IAnimationSequence> mSequences = new HashMap<Integer, IAnimationSequence>();
 	
 	public GameObject(float x, float y, TiledTextureRegion texture)
 	{
@@ -23,19 +26,29 @@ public class GameObject extends AnimatedSprite
 		super(x, y, sizex, sizey, texture);
 	}
 	
+	@Override
+	public void onPositionChanged()
+	{
+		super.onPositionChanged();
+		
+		if(lastXPos < this.getX())
+			this.flipSprite(false);
+		else if(lastXPos > this.getX())
+			this.flipSprite(true);
+		
+		lastXPos = this.getX();
+	}
+	
 	public void setAnimationSequence(int key)
 	{
-		AnimationSequence sequence = mSequences.get(key);
+		IAnimationSequence sequence = mSequences.get(key);
 		if(sequence == null)
 			return;
 		
-		if(sequence.mStart == sequence.mEnd)
-			this.stopAnimation(sequence.mStart);
-		else
-			this.animate(sequence.mDuration, sequence.mStart, sequence.mEnd, true);
+		sequence.runSequence(this);
 	}
 	
-	public void addAnimationSequence(int key, AnimationSequence sequence)
+	public void addAnimationSequence(int key, IAnimationSequence sequence)
 	{
 		mSequences.put(key, sequence);
 	}
@@ -48,6 +61,11 @@ public class GameObject extends AnimatedSprite
 	public void attachController(IController controller)
 	{
 		controller.registerGameObject(this);
+	}
+	
+	public boolean canJump()
+	{
+		return this.canJump;
 	}
 
 }
