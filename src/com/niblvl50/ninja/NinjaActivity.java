@@ -8,6 +8,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
+import com.niblvl50.ninja.collisionhandler.CollisionHandler;
 import com.niblvl50.ninja.controller.NinjaController;
 import com.niblvl50.ninja.eventbus.EventBus;
 import com.niblvl50.ninja.eventbus.EventHandler;
@@ -31,6 +32,9 @@ public class NinjaActivity extends BaseGameActivity
 	public void onLoadResources()
 	{
 		Textures.load(this);
+
+		// Allocate and register the collision handler
+		this.getEngine().registerUpdateHandler(CollisionHandler.instance());
 	}
 
 	@Override

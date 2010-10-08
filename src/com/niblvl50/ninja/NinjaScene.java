@@ -8,15 +8,18 @@ import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 
 import com.niblvl50.ninja.controller.NinjaController;
+import com.niblvl50.ninja.entities.BlackNinja;
+import com.niblvl50.ninja.entities.NinjaTurtle;
 import com.niblvl50.ninja.entities.RyuHayabusa;
 import com.niblvl50.ninja.eventbus.EventBus;
 
 public class NinjaScene extends Scene
 {
 	private ParallaxBackground mBackground = null;
-	private RyuHayabusa ninja = null;
 	private float parallaxValue = 0.0f;
-	
+
+	private RyuHayabusa ninja = null;
+
 	public NinjaScene()
 	{
 		super(1);
@@ -25,6 +28,14 @@ public class NinjaScene extends Scene
 		ninja.attachController(new NinjaController());
 		ninja.setPosition(100, 170);
 		this.getTopLayer().addEntity(ninja);
+		
+		NinjaTurtle turtle = new NinjaTurtle();
+		turtle.setPosition(200, 170);
+		this.getTopLayer().addEntity(turtle);
+		
+		BlackNinja black = new BlackNinja();
+		black.setPosition(50, 170);
+		this.getTopLayer().addEntity(black);
 		
 		mBackground = new ParallaxBackground(1.0f, 1.0f, 1.0f);
 		mBackground.addParallaxEntity(new ParallaxEntity(0.0f, this.createParallaxSprite(0.0f, Textures.backgroundSky)));

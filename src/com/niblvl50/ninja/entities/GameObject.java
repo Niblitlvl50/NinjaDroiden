@@ -6,10 +6,11 @@ import java.util.Map;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
+import com.niblvl50.ninja.collisionhandler.ICollidable;
 import com.niblvl50.ninja.controller.IController;
 
 
-public class GameObject extends AnimatedSprite
+public abstract class GameObject extends AnimatedSprite implements ICollidable
 {
 	private float lastXPos = 0;
 	private boolean canJump = true;

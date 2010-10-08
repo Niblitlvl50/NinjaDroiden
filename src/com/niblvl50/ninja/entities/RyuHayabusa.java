@@ -1,7 +1,11 @@
 package com.niblvl50.ninja.entities;
 
+import android.util.Log;
+
 import com.niblvl50.ninja.NinjaActivity;
 import com.niblvl50.ninja.Textures;
+import com.niblvl50.ninja.collisionhandler.CollisionHandler;
+import com.niblvl50.ninja.collisionhandler.ICollidableVisitor;
 
 public class RyuHayabusa extends GameObject
 {
@@ -13,6 +17,8 @@ public class RyuHayabusa extends GameObject
 	public RyuHayabusa()
 	{
 		super(0, 0, 32, 32, Textures.ryu);
+		
+		CollisionHandler.instance().register(this);
 		
 		this.loadAnimationSequences();
 		this.setAnimationSequence(RUNNING);
@@ -39,6 +45,36 @@ public class RyuHayabusa extends GameObject
 			this.mX = NinjaActivity.WORLD_WIDTH;
 		else if(this.mX > NinjaActivity.WORLD_WIDTH)
 			this.mX = 0 - this.getWidth();
+	}
+
+	@Override
+	public void AcceptCollision(ICollidableVisitor visitor)
+	{
+		visitor.Visit(this);
+	}
+
+	@Override
+	public void onCollideWith(GameObject object)
+	{
+		Log.d("RyuHayabusa", "Collision with GameObject");
+	}
+
+	@Override
+	public void onCollideWith(RyuHayabusa object)
+	{
+		Log.d("RyuHayabusa", "Collision with RyuHayabusa");
+	}
+
+	@Override
+	public void onCollideWith(NinjaTurtle object)
+	{
+		Log.d("RyuHayabusa", "Collision with NinjaTurtle");
+	}
+
+	@Override
+	public void onCollideWith(BlackNinja object)
+	{
+		Log.d("RyuHayabusa", "Collision with BlackNinja");
 	}
 
 }
